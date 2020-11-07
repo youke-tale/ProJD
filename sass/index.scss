@@ -1,0 +1,8 @@
+$width:60px;
+$height:60px;
+$bg:red;
+div {
+    width: $width;
+    height: $height;
+    background-color: $bg;
+}
