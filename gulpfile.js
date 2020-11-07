@@ -6,6 +6,12 @@ const babel = require("gulp-babel");
 
 
 //将所有的HTML文件拷贝到dist文件夹中
+gulp.task("copyHtml", done => {
+    gulp.src("index.html")
+        .pipe(gulp.dest("dist"))
+        .pipe(connect.reload());
+    done();
+})
 gulp.task("html", done => {
     gulp.src("html/*.html")
         .pipe(gulp.dest("dist/html"))
@@ -38,7 +44,9 @@ gulp.task("font", done => {
 gulp.task("sass", done => {
     gulp.src("sass/*.scss")
         .pipe(sourcemaps.init())
-        .pipe(sass()) //调用sass方法 将scss格式的文件转成css文件
+        .pipe(sass({
+            outputStyle: "expanded"
+        })) //调用sass方法 将scss格式的文件转成css文件
         .pipe(sourcemaps.write())
         .pipe(gulp.dest("dist/css"))
         .pipe(connect.reload());
@@ -54,16 +62,17 @@ gulp.task("server", done => {
     done();
 })
 
-//监听
+//监听  第一个参数改变的文件的路径  第二个相应的方法
 gulp.task("watch", done => {
+    gulp.watch("index.html", gulp.series("copyHtml"));
     gulp.watch("html/*.html", gulp.series("html"));
-    gulp.watch("sass/*.css", gulp.series("sass"));
+    gulp.watch("sass/*.scss", gulp.series("sass"));
     gulp.watch("js/*.js", gulp.series("js"));
     gulp.watch("font/*", gulp.series("font"));
     gulp.watch("img/*", gulp.series("img"));
     done();
 })
 
-gulp.task("build", gulp.parallel("html", "js", "img", "font", "sass")); //同步更改的文件和dist里的文件
+gulp.task("build", gulp.parallel("copyHtml", "html", "js", "img", "font", "sass")); //同步更改的文件和dist里的文件
 
 gulp.task("default", gulp.series("build", "server", "watch"));
