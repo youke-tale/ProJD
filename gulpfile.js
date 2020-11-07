@@ -22,7 +22,7 @@ gulp.task("js", done => {
     done();
 })
 gulp.task("img", done => {
-    gulp.src("img/*.{jpg,png}")
+    gulp.src("img/*")
         .pipe(gulp.dest("dist/img"))
         .pipe(connect.reload());
     done();
@@ -60,7 +60,7 @@ gulp.task("watch", done => {
     gulp.watch("sass/*.css", gulp.series("sass"));
     gulp.watch("js/*.js", gulp.series("js"));
     gulp.watch("font/*", gulp.series("font"));
-    gulp.watch("img/*.{jpg,png}", gulp.series("img"));
+    gulp.watch("img/*", gulp.series("img"));
     done();
 })
 
