@@ -39,6 +39,12 @@ gulp.task("font", done => {
         .pipe(connect.reload());
     done();
 })
+gulp.task("css", done => {
+    gulp.src("css/*")
+        .pipe(gulp.dest("dist/css"))
+        .pipe(connect.reload());
+    done();
+})
 
 //创建名为sass的方法，使用sass()
 gulp.task("sass", done => {
@@ -68,11 +74,12 @@ gulp.task("watch", done => {
     gulp.watch("html/*.html", gulp.series("html"));
     gulp.watch("sass/*.scss", gulp.series("sass"));
     gulp.watch("js/*.js", gulp.series("js"));
+    gulp.watch("css/*", gulp.series("css"));
     gulp.watch("font/*", gulp.series("font"));
     gulp.watch("img/*", gulp.series("img"));
     done();
 })
 
-gulp.task("build", gulp.parallel("copyHtml", "html", "js", "img", "font", "sass")); //同步更改的文件和dist里的文件
+gulp.task("build", gulp.parallel("copyHtml", "html", "css", "js", "img", "font", "sass")); //同步更改的文件和dist里的文件
 
 gulp.task("default", gulp.series("build", "server", "watch"));

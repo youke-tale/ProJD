@@ -193,7 +193,6 @@ body {
         margin: auto;
         .fl {
             height: 30px;
-            // background-color: #666;
             li {
                 a {
                     height: 28px;
@@ -229,7 +228,8 @@ body {
                         line-height: 12px;
                         font-family: iconfont, sans-serif;
                         font-style: normal;
-                        -webkit-text-stroke-width: .2px;
+                        transform: scale(0.5, 0.5);
+                        -webkit-transform: scale(0.5, 0.5);
                         vertical-align: middle;
                     }
                 }
@@ -246,12 +246,12 @@ body {
 
 #search_wrap {
     width: 100%;
+    border-bottom: 1px solid #ddd;
     #search {
         width: 990px;
         height: 140px;
         margin: 0 auto;
         position: relative;
-        // background-color: #666;
         div {
             a {
                 height: 100%;
@@ -266,15 +266,15 @@ body {
         }
         form {
             position: absolute;
-            left: 260px;
+            left: 220px;
             top: 25px;
-            width: 546px;
+            width: 486px;
             height: 32px;
             border: 2px solid #e2231a;
             background: #fff;
             input {
                 padding: 2px 44px 2px 17px;
-                width: 425px;
+                width: 367px;
                 height: 26px;
                 border: 1px solid transparent;
                 line-height: 26px;
@@ -285,7 +285,7 @@ body {
                 right: 75px;
                 top: 5px;
             }
-            button {
+            .btn1 {
                 width: 58px;
                 height: 32px;
                 line-height: 32px;
@@ -299,13 +299,34 @@ body {
                 cursor: pointer;
                 position: absolute;
                 top: 0;
+                right: 0;
                 outline: none;
+            }
+            .btn2 {
+                width: 130px;
+                height: 34px;
+                background-color: #fff;
+                text-align: center;
+                line-height: 34px;
+                border: 1px solid #e3e4e5;
+                color: #e1251b;
+                position: absolute;
+                right: -148px;
+                outline: none;
+                cursor: pointer;
+                i {
+                    margin-right: 13px;
+                    -webkit-text-stroke-width: .2px;
+                }
+                &:hover {
+                    border-color: #c81623;
+                }
             }
         }
         .hotwords {
             overflow: hidden;
             position: absolute;
-            left: 260px;
+            left: 220px;
             top: 65px;
             width: 550px;
             height: 20px;
@@ -315,6 +336,82 @@ body {
                 line-height: 20px;
                 color: #999;
             }
+        }
+        .navitem {
+            position: absolute;
+            bottom: 0;
+            left: 203px;
+            color: #333;
+            span {
+                display: block;
+                float: left;
+                height: 40px;
+                margin-left: 1px;
+                a {
+                    display: block;
+                    height: 40px;
+                    margin: 0 11px;
+                    line-height: 40px;
+                    font-size: 15px;
+                }
+            }
+        }
+    }
+}
+
+#main_wrap {
+    width: 100%;
+    background-color: #f4f4f4;
+    padding-top: 10px;
+    .first {
+        width: 990px;
+        // overflow: hidden;
+        // padding-top: 10px;
+        height: 470px;
+        color: #636363;
+        margin: auto;
+        background-color: #666;
+        // display: flex;
+        // justify-content: space-between;
+        position: relative;
+        ul {
+            width: 190px;
+            height: 450px;
+            padding: 10px 0;
+            background-color: #fefefe;
+            li {
+                width: 172;
+                height: 25px;
+                line-height: 25px;
+                padding-left: 18px;
+            }
+        }
+        .swiper-container {
+            width: 590px;
+            height: 470px;
+            background-color: red;
+            position: absolute;
+            left: 200px;
+            .swiper-slide {
+                background-position: center;
+                background-size: cover;
+            }
+            .swiper-pagination-white {
+                position: absolute;
+                left: 30px;
+                bottom: 20px;
+                margin-right: 4px;
+            }
+            .swiper-pagination-bullet {
+                margin: 10px;
+            }
+        }
+        div:nth-of-type(2) {
+            width: 190px;
+            height: 470px;
+            background-color: #c81623;
+            position: absolute;
+            right: 0;
         }
     }
 }
