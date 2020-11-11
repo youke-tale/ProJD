@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加数据</title>
+    <style>
+        form {
+            width: 300px;
+            height: 400px;
+            background-color: #c3c3c3;
+            overflow: hidden;
+        }
+        
+        span {
+            margin: 0 40px;
+            display: block;
+        }
+        
+        input {
+            width: 150px;
+        }
+        
+        #btn {
+            width: 100px;
+            height: 30px;
+            background-color: #adadad;
+            margin: 10px 0 10px 95px;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form>
+        <!-- <span>img1<input id="img1" type="text" value="//img10.360buyimg.com/img/s380x420_jfs/t1/141035/39/11136/7476/5f8d3e82Eb70aa73c/01913c9f602e50a1.png!cc_190x210.webp">
+        <span>img2<input id="img2" type="text"></span>
+        <span>img3<input id="img3" type="text" value="//img30.360buyimg.com/img/s344x60_jfs/t1/149249/28/11299/2847/5f8d3e89Ea1f0cbef/cea7d3bcfd905172.png!cc_172x30.webp"></span>
+        <span>txt1<input id="txt1" type="text"></span>
+        <span>txt2<input id="txt2" type="text"></span> -->
+        <!-- <button id="btn">提交</button> -->
+        <span>img <input id="img" type="text"></span>
+        <span>txt <input id="txt" type="text"></span>
+        <span>price <input id="price" type="text"></span>
+        <button id="btn">提交</button>
+    </form>
+
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- <script>
+        window.onload = function() {
+            let btn = document.getElementById("btn");
+            btn.onclick = function() {
+                let img11 = document.getElementById("img1").value;
+                let img21 = document.getElementById("img2").value;
+                let img31 = document.getElementById("img3").value;
+                let txt11 = document.getElementById("txt1").value;
+                let txt21 = document.getElementById("txt2").value;
+
+                axios.post("http://localhost:3000/products", {
+                    img1: img11,
+                    img2: img21,
+                    img3: img31,
+                    txt1: txt11,
+                    txt2: txt21
+                });
+                // axios.delete("http://localhost:3000/user/1");
+            }
+        }
+    </script> -->
+    <script>
+        window.onload = function() {
+            let btn = document.getElementById("btn");
+            btn.onclick = function() {
+                let img = document.getElementById("img").value;
+                let txt = document.getElementById("txt").value;
+                let price = document.getElementById("price").value;
+
+                axios.post("http://localhost:3000/list", {
+                    img: img,
+                    txt: txt,
+                    price: price
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="../js/jquery1.11.js"></script>
+    <style>
+        img,
+        li,
+        ul,
+        p,
+        div,
+        input {
+            margin: 0;
+            padding: 0;
+        }
+        
+        li {
+            width: 420px;
+            height: 150px;
+            position: relative;
+        }
+        
+        img {
+            width: 150px;
+            height: 150px;
+            margin: 0 20px;
+            float: left;
+        }
+        
+        p {
+            width: 230px;
+            margin: 6px 0;
+            float: left;
+        }
+        
+        .price {
+            font-size: 18px;
+            color: #ff0000;
+            position: absolute;
+            bottom: 30px;
+            left: 190px;
+        }
+        
+        i {
+            font-size: 14px;
+        }
+        
+        #minus,
+        #plus {
+            width: 10px;
+            height: 20px;
+            font-size: 24px;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+        
+        #oTxt {
+            width: 40px;
+            height: 20px;
+        }
+        
+        #addbtn {
+            width: 100px;
+            height: 30px;
+            background-color: #ff0000;
+            color: #fff;
+            vertical-align: middle;
+            margin-left: 40px;
+            cursor: pointer;
+        }
+        
+        div {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="list">
+        <!-- <li>
+            <input class="check" type="checkbox">
+            <img src="//img13.360buyimg.com/jdcms/s300x300_jfs/t1/121103/14/17619/136449/5fa531dfE84e6e7b9/ea57c3deabe90fbf.jpg.webp" alt="">
+            <p>天梭(TISSOT)瑞士手表 速驰系列钢带石英男士手表运动表</p>
+            <span class="price"><i>￥</i> 2024.00</span>
+            <div>
+                <span class="minus">-</span>
+                <input class="oTxt" type="text">
+                <span class="plus">+</span>
+                <input class="addbtn" type="button" value="加入购物车">
+            </div>
+        </li> -->
+    </ul>
+
+    <script>
+        let id = location.search.split("=")[1];
+        axios.get(`http://localhost:3000/list?id=${id}`)
+            .then(res => {
+                let str = `
+                <li>
+                    <img src="${res.data[0].img}" alt="">
+                    <p>${res.data[0].txt}</p>
+                    <span class="price"><i>￥</i>&nbsp;${res.data[0].price}</span>
+                    <div>
+                        <span id="minus">-</span>
+                        <input id="oTxt" type="text" value="1">
+                        <span id="plus">+</span>
+                        <input id="addbtn" type="button" value="加入购物车">
+                    </div>
+                </li>
+                `
+                $("#list").html(str);
+
+                $("#minus").click(function() {
+                    let num = $("#oTxt").val();
+                    num--;
+                    if (num < 1) {
+                        num = 1;
+                    }
+                    $("#oTxt").val(num);
+                });
+                $("#plus").click(function() {
+                    let num = $("#oTxt").val();
+                    num++;
+                    $("#oTxt").val(num);
+                });
+                $("#oTxt").change(function() {
+                    let num = $("#oTxt").val();
+                    if (num < 1) {
+                        num = 1;
+                    }
+                    $("#oTxt").val(num);
+                });
+                $("#addbtn").click(function() {
+                    let num = $("#oTxt").val();
+                    console.log(id, num)
+                        // axios.post()
+                })
+            });
+
+        document.onselectstart = new Function("event.returnValue=false;"); //阻止选中
+    </script>
+
+</body>
+
+
+</html>
