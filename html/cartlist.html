@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>购物车</title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="../js/jquery1.11.js"></script>
     <style>
         img,
         li,
@@ -37,7 +38,7 @@
             float: left;
         }
         
-        #price {
+        .price {
             font-size: 18px;
             color: #ff0000;
             position: absolute;
@@ -49,8 +50,8 @@
             font-size: 14px;
         }
         
-        #minus,
-        #plus {
+        .minus,
+        .plus {
             width: 10px;
             height: 20px;
             font-size: 24px;
@@ -58,12 +59,12 @@
             cursor: pointer;
         }
         
-        #oTxt {
+        .oTxt {
             width: 40px;
             height: 20px;
         }
         
-        #addbtn {
+        .addbtn {
             width: 100px;
             height: 30px;
             background-color: #ff0000;
@@ -79,13 +80,13 @@
             right: 0;
         }
         
-        #check {
+        .check {
             position: absolute;
             left: 0;
             top: 50%;
         }
         
-        #perTotalPrice {
+        .perTotalPrice {
             position: absolute;
             bottom: 35px;
             right: 10px;
@@ -101,10 +102,10 @@
 </head>
 
 <body>
-    全选&nbsp;&nbsp;<input type="checkbox">
-    <span id="totalPrice">111</span>
+    全选&nbsp;&nbsp;<input id="checkAll" type="checkbox">
+    <span id="totalPrice"></span>
     <ul id="list">
-        <li>
+        <!-- <li>
             <input id="check" type="checkbox">
             <img src="//img13.360buyimg.com/jdcms/s300x300_jfs/t1/121103/14/17619/136449/5fa531dfE84e6e7b9/ea57c3deabe90fbf.jpg.webp" alt="">
             <p>天梭(TISSOT)瑞士手表 速驰系列钢带石英男士手表运动表</p>
@@ -129,32 +130,121 @@
                 <input id="addbtn" type="button" value="删除">
             </div>
             <span id="perTotalPrice">33</span>
-        </li>
+        </li> -->
     </ul>
 
     <script>
-        let id = location.search.split("=")[1];
+        //
+        $("#checkAll")[0].checked = true;
 
-        axios.get(`http://localhost:3000/list?id=${id}`)
+        function A() {
+            for (let i = 0; i < $(".check").length; i++) {
+                $(".check")[i].checked = true;
+            }
+            SUM();
+        }
+
+
+        // SUM();
+        axios.get(`http://localhost:3000/cart`)
             .then(res => {
-                console.log(res.data)
-                let str = `
-                <li>
-                    <input id="check" type="checkbox">
-                    <img src="${res.data[0].img}" alt="">
-                    <p>${res.data[0].txt}</p>
-                    <span id="price"><i>￥</i>&nbsp;${res.data[0].price}</span>
-                    <div>
-                        <span id="minus">-</span>
-                        <input id="oTxt" type="text">
-                        <span id="plus">+</span>
-                        <input id="addbtn" type="button" value="删除">
-                    </div>
-                </li>
-                `
+                let str = '';
+                for (let i = 0; i < res.data.length; i++) {
+                    let TPrice;
+                    TPrice = res.data[i].price * res.data[i].num;
+                    str += `
+                    <li data-id="${i}">
+                        <input class="check" type="checkbox">
+                        <img src="${res.data[i].img}" alt="">
+                        <p>${res.data[i].txt}</p>
+                        <span class="price"><i>￥</i>&nbsp;${res.data[i].price}</span>
+                        <div>
+                            <span class="minus">-</span>
+                            <input class="oTxt" type="text" value="${res.data[i].num}">
+                            <span class="plus">+</span>
+                            <input class="addbtn" type="button" value="删除" uid="${res.data[i].id}">
+                        </div>
+                        <span class="perTotalPrice">${TPrice}</span>
+                    </li>
+                    `
+                }
                 $("#list").html(str);
-            });
+                A();
 
+                for (let i = 0; i < res.data.length; i++) {
+                    $(".minus").eq(i).click(function() {
+                        this.num = $(".oTxt").eq(i).val();
+                        this.num--;
+                        if (this.num < 1) {
+                            this.num = 1;
+                        }
+                        $(".oTxt").eq(i).val(this.num);
+                        let TPrice = this.num * res.data[i].price;
+                        $(".perTotalPrice").eq(i).text(TPrice);
+
+                        SUM();
+                    });
+                    $(".plus").eq(i).click(function() {
+                        let num = $(".oTxt").eq(i).val();
+                        num++;
+                        $(".oTxt").eq(i).val(num);
+                        let TPrice = num * res.data[i].price;
+                        $(".perTotalPrice").eq(i).text(TPrice);
+
+                        SUM();
+                    });
+                    $(".oTxt").eq(i).change(function() {
+                        let num = $(".oTxt").eq(i).val();
+                        if (num < 1) {
+                            num = 1;
+                        }
+                        $(".oTxt").eq(i).val(num);
+                        let TPrice = num * res.data[i].price;
+                        $(".perTotalPrice").eq(i).text(TPrice);
+
+                        SUM();
+                    });
+
+                };
+                $(".addbtn").click(function() {
+                    $(this).parents("li").remove();
+                    axios.delete(`http://localhost:3000/cart/${$(this).attr("uid")}`);
+                    SUM();
+                });
+                $("#checkAll").click(function() {
+                    let flug = this.checked;
+                    for (let i = 0; i < $(".check").length; i++) {
+                        $(".check")[i].checked = flug;
+                    }
+                    SUM();
+                })
+                $(".check").click(function() {
+                    var count = 0;
+                    for (let i = 0; i < $(".check").length; i++) {
+                        if ($(".check")[i].checked) {
+                            count++;
+                        }
+                    }
+                    if (count == $(".check").length) {
+                        $("#checkAll")[0].checked = true;
+                    } else {
+                        $("#checkAll")[0].checked = false;
+                    }
+                    SUM();
+                    console.log($("#checkAll")[0].checked);
+                })
+            })
+
+        function SUM() {
+            //计算总价
+            let sum = 0;
+            for (let i = 0; i < $(".check").length; i++) {
+                if ($(".check")[i].checked == true) {
+                    sum += +$(".perTotalPrice").eq(i).text();
+                }
+            }
+            $("#totalPrice").text(sum);
+        }
 
         document.onselectstart = new Function("event.returnValue=false;"); //阻止选中
     </script>

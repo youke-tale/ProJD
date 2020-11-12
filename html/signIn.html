@@ -4,16 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>注册</title>
+    <title>欢迎注册</title>
     <link rel="stylesheet" href="../css/signIn.css">
 </head>
 
 <body>
+    <div id="logo">
+        <a href="../index.html">
+            <img src="//misc.360buyimg.com/lib/img/e/logo-201305-b.png">
+        </a>
+        <h2>欢迎注册</h2>
+        <h3 class="fr">已有帐号？<a href="../html/login.html">去登陆></a>
+        </h3>
+    </div>
+    <!-- <div id="wrap">
+        <div class="img1"></div>
+    </div> -->
     <form>
-        <span>用户&nbsp;&nbsp;<input id="user" type="text"></span>
-        <span>密码&nbsp;&nbsp;<input id="paw" type="password"></span>
-        <button id="btn">注册</button>
-        <!-- <input id="btn" type="button" placeholder="注册"></input> -->
+        <span>用户&nbsp;&nbsp;<input id="user" type="text" placeholder="用户名"></span>
+        <span>密码&nbsp;&nbsp;<input id="paw" type="password" placeholder="密码"></span>
+        <!-- <button id="btn">注册</button> -->
+        <input id="btn" type="button" value="注册"></input>
     </form>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

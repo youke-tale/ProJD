@@ -1,39 +1,33 @@
 var btn = document.getElementById("btn");
-
+var flex1 = true;
+var flex2 = true;
+var su = "";
 btn.onclick = function() {
-    var flug = true;
-    let user = document.getElementById("user").value;
-    let paw = document.getElementById("paw").value;
-    // console.log(user, paw)
+    var user = document.getElementById("user").value;
+    var paw = document.getElementById("paw").value;
     if (user == "") {
-        alert("用户名不能为空/用户名重复");
-        flug = false
+        alert("用户名不能为空");
+        flex1 = false
     } else {
-        flug = true
+        flex1 = true
     }
     if (paw == "") {
-        // alert("用户密码不能为空");
-        flug = false
+        alert("用户密码不能为空");
+        flex2 = false
     } else {
-        flug = true
+        flex2 = true
     }
-    if (flug) {
+    if (flex1 && flex2) {
         axios.post("http://localhost:3000/user", {
             username: user,
             password: paw
 
         }).then(res => {
-            su = res.data.length;
-            if (su == 0) {
-                alert("用户名已存在")
-            } else {
-                alert("注册成功")
-                window.location.href = "login.html"
-
-            }
-        }).catch(err => {
-            console.log(err)
+            // su = res.data.length;
+            // if (su) {
+            alert("注册成功");
+            window.location.href = "login.html";
+            // }
         })
     }
-
 }

@@ -25,7 +25,7 @@ function oDate(date) {
     }
 }
 
-var d = new Date("2020/11/18 20:00:00")
+var d = new Date("2020/11/13 10:00:00");
 
 oDate(d);
 var timer = setInterval(function() {

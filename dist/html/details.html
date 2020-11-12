@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>商品详情</title>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="../js/jquery1.11.js"></script>
     <style>
@@ -101,28 +101,29 @@
         let id = location.search.split("=")[1];
         axios.get(`http://localhost:3000/list?id=${id}`)
             .then(res => {
+                var arr = res.data;
                 let str = `
-                <li>
-                    <img src="${res.data[0].img}" alt="">
-                    <p>${res.data[0].txt}</p>
-                    <span class="price"><i>￥</i>&nbsp;${res.data[0].price}</span>
-                    <div>
-                        <span id="minus">-</span>
-                        <input id="oTxt" type="text" value="1">
-                        <span id="plus">+</span>
-                        <input id="addbtn" type="button" value="加入购物车">
-                    </div>
-                </li>
+                    <li>
+                        <img src="${res.data[0].img}" alt="">
+                        <p>${res.data[0].txt}</p>
+                        <span class="price"><i>￥</i>&nbsp;${res.data[0].price}</span>
+                        <div>
+                            <span id="minus">-</span>
+                            <input id="oTxt" type="text" value="1">
+                            <span id="plus">+</span>
+                            <input id="addbtn" type="button" value="加入购物车">
+                        </div>
+                    </li>
                 `
                 $("#list").html(str);
 
                 $("#minus").click(function() {
-                    let num = $("#oTxt").val();
-                    num--;
-                    if (num < 1) {
-                        num = 1;
+                    this.num = $("#oTxt").val();
+                    this.num--;
+                    if (this.num < 1) {
+                        this.num = 1;
                     }
-                    $("#oTxt").val(num);
+                    $("#oTxt").val(this.num);
                 });
                 $("#plus").click(function() {
                     let num = $("#oTxt").val();
@@ -137,9 +138,37 @@
                     $("#oTxt").val(num);
                 });
                 $("#addbtn").click(function() {
+                    console.log(arr[0].id);
                     let num = $("#oTxt").val();
-                    console.log(id, num)
-                        // axios.post()
+                    axios.get("http://localhost:3000/cart?arr[0].id").then(res => {
+                        this.len = res.data.length;
+                        // console.log(res.data[0].id)
+                        // let id = res.data[0].id;
+                        // if (this.len) {
+                        //     axios.patch("http://localhost:3000/cart?`${id}`", {
+                        //         "num": num
+                        //     });
+                        // } else {
+                        axios.post("http://localhost:3000/cart", {
+                            id: `${arr[0].id}`,
+                            img: `${arr[0].img}`,
+                            txt: `${arr[0].txt}`,
+                            price: `${arr[0].price}`,
+                            num: num
+                        });
+                        // }
+                    })
+                    console.log(this.len);
+                    // axios.post("http://localhost:3000/cart", {
+                    //     id: `${arr[0].id}`,
+                    //     img: `${arr[0].img}`,
+                    //     txt: `${arr[0].txt}`,
+                    //     price: `${arr[0].price}`,
+                    //     num: num
+                    // }).then(res => {
+                    //     this.getData();
+                    // });
+                    // location.href = "cartlist.html"
                 })
             });
 

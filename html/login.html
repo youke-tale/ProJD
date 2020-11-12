@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>登录</title>
+    <title>欢迎登录</title>
     <link rel="stylesheet" href="../css/signIn.css">
     <!-- <style>
         form {
@@ -34,11 +34,20 @@
 </head>
 
 <body>
+    <div id="logo">
+        <a href="../index.html">
+            <img src="//misc.360buyimg.com/lib/img/e/logo-201305-b.png">
+        </a>
+        <h2>欢迎登录</h2>
+    </div>
+    <div id="wrap">
+        <div class="img1"></div>
+    </div>
     <form>
         <span>用户&nbsp;&nbsp;<input id="user" type="text"></span>
         <span>密码&nbsp;&nbsp;<input id="paw" type="password"></span>
         <!-- <button id="btn">登录</button> -->
-        <input id="btn" type="button" placeholder="注册"></input>
+        <input id="btn" type="button" value="登录"></input>
     </form>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
