@@ -148,6 +148,15 @@
         // SUM();
         axios.get(`http://localhost:3000/cart`)
             .then(res => {
+                $("#checkAll")[0].checked = true;
+
+                function A() {
+                    for (let i = 0; i < $(".check").length; i++) {
+                        $(".check")[i].checked = true;
+                    }
+                    SUM();
+                }
+
                 let str = '';
                 for (let i = 0; i < res.data.length; i++) {
                     let TPrice;
