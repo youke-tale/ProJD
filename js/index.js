@@ -1,15 +1,25 @@
 ;
 $(function() {
     copy();
+    var flag = false
     $(window).scroll(function() {
-        if ($(window).scrollTop() > 600) {
-            $("#search_float").stop().animate({
-                top: 0
-            }, 500)
+        if (flag) {
+            return
         } else {
             $("#search_float").stop().animate({
                 top: -52
-            })
+            }, 0)
+        }
+
+        if ($(window).scrollTop() > 600) {
+            flag = true;
+            $("#search_float").stop().animate({
+                top: 0
+            }, 500);
+        } else {
+            $("#search_float").stop().animate({
+                top: -52
+            }, 0)
         }
     });
     axios.get("http://localhost:3000/products")
@@ -53,7 +63,7 @@ $(function() {
             $("#list").html(str);
         })
     $(".iconclose").click(function() {
-        $(this).parents("div").parents("div").remove();
+        $(this).parent("div").parent("div").remove();
     })
 })
 
